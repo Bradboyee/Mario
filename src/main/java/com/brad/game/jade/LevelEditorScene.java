@@ -1,8 +1,10 @@
 package com.brad.game.jade;
 
-import com.brad.game.jade.component.SpriteRenderer;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+
+import com.brad.game.jade.component.SpriteRenderer;
+import com.brad.game.jade.util.AssetPool;
 
 public class LevelEditorScene extends Scene {
 
@@ -11,30 +13,34 @@ public class LevelEditorScene extends Scene {
 
 	@Override
 	public void init() {
-		camera = new Camera( new Vector2f() );
-		
-		int xOffset = 10;
-		int yOffset = 10;
+		this.camera = new Camera(new Vector2f(-250, 0));
 
-		float width = (float)(600 - xOffset * 2);
-		float height = (float)(300 - yOffset * 2);
-		float sizeX = width / 100.0f;
-		float sizeY = height / 100.0f;
+		GameObject obj1 = new GameObject("Object 1", new Transform(new Vector2f(100, 100), new Vector2f(256, 256)));
+		obj1.addComponent(new SpriteRenderer(AssetPool.getTexture("assets/images/testImage.png")));
+		this.addGameObjectToScene(obj1);
+
+		GameObject obj2 = new GameObject("Object 2", new Transform(new Vector2f(400, 100), new Vector2f(256, 256)));
+		obj2.addComponent(new SpriteRenderer(AssetPool.getTexture("assets/images/testImage2.png")));
+		this.addGameObjectToScene(obj2);
+
+		loadResources();
 		
-		for ( int y = 0; y < 100; y++ ) {
-			for ( int x = 0; x < 100; x++ ) {
-				float xPos = xOffset + ( x + sizeX );
-				float yPos = yOffset + ( y + sizeY );
-				GameObject go = new GameObject( String.format( "Game Obj %s, %s", x, y ), new Transform( new Vector2f( xPos, yPos ), new Vector2f(sizeX, sizeY) ) );
-				go.addComponent( new SpriteRenderer( new Vector4f( xPos / width, yPos / height, 1, 1 ) ) );
-				this.addGameObjectToScene( go );
-			}
-		}
+		loadResources();
+	}
+
+	/*
+	====================
+	loadResource
+	 create AssetPool for shader.
+	====================
+	*/
+	private void loadResources() {
+		AssetPool.getShader( "assets/shaders/default.glsl" );
 	}
 
 	@Override
 	public void update( float dt ) {
-		System.out.printf( "\nFPS : %f", 1.0f/dt );
+//		System.out.printf( "\nFPS : %f", 1.0f/dt );
 		
 		for ( GameObject go : this.gameObjects ) {
 			go.update( dt );
