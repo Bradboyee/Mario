@@ -8,16 +8,16 @@ import com.brad.game.renderer.Texture;
 
 public class SpriteRenderer extends Component {
 
-	private Texture texture;
 	private Vector4f color;
+	private Sprite sprite;
 
 	public SpriteRenderer( Vector4f color ) {
 		this.color 		= color;
-		this.texture 	= null;
+		this.sprite 	= new Sprite( null );
 	}
 	
-	public SpriteRenderer( Texture texture ) {
-		this.texture 	= texture;
+	public SpriteRenderer( Sprite sprite ) {
+		this.sprite 	= sprite;
 		this.color 		= new Vector4f( 1.0f, 1.0f, 1.0f, 1.0f );
 	}
 
@@ -44,16 +44,10 @@ public class SpriteRenderer extends Component {
 	====================
 	*/
 	public Texture getTexture() {
-		return this.texture;
+		return this.sprite.getTexture();
 	}
 
 	public Vector2f[] getTexCoords() {
-		Vector2f[] texCoords = { 
-				new Vector2f( 1.0f, 1.0f ), 
-				new Vector2f( 1.0f, 0.0f ), 
-				new Vector2f( 0.0f, 0.0f ),
-				new Vector2f( 0.0f, 1.0f ), 
-				};
-		return texCoords;
+		return this.sprite.getTexCoords();
 	}
 }

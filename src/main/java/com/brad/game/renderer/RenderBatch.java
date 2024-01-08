@@ -93,6 +93,7 @@ public class RenderBatch {
         this.sprites[ index ] = spr;
         this.numSprites++;
 
+        //	add new texture.
         if ( spr.getTexture() != null ) {
             if ( !textures.contains( spr.getTexture() ) ) {
                 textures.add( spr.getTexture() );
@@ -219,4 +220,12 @@ public class RenderBatch {
     public boolean hasRoom() {
         return this.hasRoom;
     }
+    
+    public boolean hasTextureRoom() {
+    	return this.textures.size() < 8;
+    }
+    
+	public boolean hasTexture( Texture t ) {
+		return this.textures.contains( t );
+	}
 }
