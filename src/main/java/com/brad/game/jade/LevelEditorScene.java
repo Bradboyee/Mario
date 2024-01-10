@@ -18,17 +18,20 @@ public class LevelEditorScene extends Scene {
 	@Override
 	public void init() {
 		loadResources();
-		
-		spriteSheet = AssetPool.getSpriteSheet( "assets/images/spritesheet.png" );
-		
-		this.camera = new Camera(new Vector2f(-250, 0));
 
-		obj1 = new GameObject( "Object 1", new Transform( new Vector2f( 100, 100 ), new Vector2f( 256, 256 ) ) );
-		obj1.addComponent( new SpriteRenderer( spriteSheet.getSprite( 0 )  ) );
+		spriteSheet = AssetPool.getSpriteSheet( "assets/images/spritesheet.png" );
+
+		this.camera = new Camera( new Vector2f( -250, 0 ) );
+
+		obj1 = new GameObject( "Object 1", new Transform( new Vector2f( 200, 100 ), new Vector2f( 256, 256 ) ), 1 );
+		obj1.addComponent(
+				new SpriteRenderer( new Sprite( AssetPool.getTexture( "assets/images/blendImage1.png" ) ) ) );
 		this.addGameObjectToScene( obj1 );
 
-		GameObject obj2 = new GameObject( "Object 2", new Transform( new Vector2f( 400, 100 ), new Vector2f( 256, 256 ) ) );
-		obj2.addComponent( new SpriteRenderer( spriteSheet.getSprite( 10 )  ) );
+		GameObject obj2 = new GameObject( "Object 2",
+				new Transform( new Vector2f( 400, 100 ), new Vector2f( 256, 256 ) ), 1 );
+		obj2.addComponent(
+				new SpriteRenderer( new Sprite( AssetPool.getTexture( "assets/images/blendImage2.png" ) ) ) );
 		this.addGameObjectToScene( obj2 );
 
 	}
@@ -52,16 +55,16 @@ public class LevelEditorScene extends Scene {
 	private float spriteFlipTimeLeft = 0.0f;
 	@Override
 	public void update( float dt ) {
-		System.out.println( dt );
-		spriteFlipTimeLeft -= dt;
-		if ( spriteFlipTimeLeft <= 0 ) {
-			spriteFlipTimeLeft = spriteFlipTime;
-			spriteIndex++;
-			if (spriteIndex > 4 ) {
-				spriteIndex = 0;
-			}
-			obj1.getComponent( SpriteRenderer.class ).setSprite( spriteSheet.getSprite( spriteIndex ) );
-		}
+//		System.out.println( dt );
+//		spriteFlipTimeLeft -= dt;
+//		if ( spriteFlipTimeLeft <= 0 ) {
+//			spriteFlipTimeLeft = spriteFlipTime;
+//			spriteIndex++;
+//			if (spriteIndex > 4 ) {
+//				spriteIndex = 0;
+//			}
+//			obj1.getComponent( SpriteRenderer.class ).setSprite( spriteSheet.getSprite( spriteIndex ) );
+//		}
 		
 		obj1.transform.position.x += 10* dt;
 //		System.out.printf( "\nFPS : %f", 1.0f/dt );

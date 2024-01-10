@@ -7,6 +7,7 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import static org.lwjgl.opengl.GL15.*;
@@ -16,7 +17,7 @@ import static org.lwjgl.opengl.GL20C.glVertexAttribPointer;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
-public class RenderBatch {
+public class RenderBatch implements Comparable<RenderBatch>{
     // Vertex
     // ======
     // Pos               Color                         tex coords     tex id
@@ -42,12 +43,14 @@ public class RenderBatch {
     private List<Texture> textures;
     private int vaoID, vboID;
     private int maxBatchSize;
+    private int zIndex;
     private Shader shader;
 
-    public RenderBatch( int maxBatchSize ) {
+    public RenderBatch( int maxBatchSize, int zIndex ) {
         shader = AssetPool.getShader( "assets/shaders/default.glsl" );
         this.sprites = new SpriteRenderer[ maxBatchSize ];
         this.maxBatchSize = maxBatchSize;
+        this.zIndex = zIndex;
 
         // 4 vertices quads
         vertices = new float[ maxBatchSize * 4 * VERTEX_SIZE ];
@@ -240,4 +243,14 @@ public class RenderBatch {
 	public boolean hasTexture( Texture t ) {
 		return this.textures.contains( t );
 	}
+	
+	public int zIndex() {
+		return this.zIndex;
+	}
+
+	@Override
+	public int compareTo( RenderBatch rb ) {
+		return Integer.compare( this.zIndex(), rb.zIndex() );
+	}
+
 }

@@ -5,6 +5,7 @@ import com.brad.game.jade.GameObject;
 import com.brad.game.jade.component.SpriteRenderer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Renderer {
@@ -25,7 +26,8 @@ public class Renderer {
     private void add(SpriteRenderer sprite) {
         boolean added = false;
         for (RenderBatch batch : batches) {
-            if (batch.hasRoom()) {
+        	// add when has room and same z index.
+            if (batch.hasRoom() && batch.zIndex() == sprite.gameObject.zIndex() ) {
             	Texture texture = sprite.getTexture();
             	if( texture == null || batch.hasTexture( texture ) || batch.hasTextureRoom() ) {
 					batch.addSprite( sprite );
@@ -36,10 +38,13 @@ public class Renderer {
         }
 
         if (!added) {
-            RenderBatch newBatch = new RenderBatch(MAX_BATCH_SIZE);
+            RenderBatch newBatch = new RenderBatch(MAX_BATCH_SIZE, sprite.gameObject.zIndex() );
             newBatch.start();
             batches.add(newBatch);
             newBatch.addSprite(sprite);
+            
+            //every time when create new batch sort z index.
+            Collections.sort( batches );
         }
     }
 

@@ -9,6 +9,8 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
+import java.util.Collections;
+
 public class Window {
 	private int width, height;
 	private String title;
@@ -119,6 +121,10 @@ public class Window {
 		// creates the GLCapabilities instance and makes the OpenGL
 		// bindings available for use.
 		GL.createCapabilities();
+		
+		glEnable( GL_BLEND );
+		
+		glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA) ;
 
 		Window.changeScene(0);
 	}
